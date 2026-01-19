@@ -4,30 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scenes and Frame | Premium Art Frames</title>
+    <title>Scenes and Frame | 2026 Collection</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fafafa;
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d1d1d1;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1a1;
-        }
+        :root { --brand: #D30000; --dark: #0a0a0a; }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0a0a0a; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .bg-brand { background-color: var(--brand); }
+        .text-brand { color: var(--brand); }
+        .border-brand { border-color: var(--brand); }
+        .cinematic-shadow { shadow: 0 25px 50px -12px rgba(211, 0, 0, 0.15); }
+        input:focus, select:focus, textarea:focus { border-color: var(--brand); outline: none; ring: 2px var(--brand); }
     </style>
 <script type="importmap">
 {
@@ -42,7 +30,7 @@
 }
 </script>
 </head>
-<body>
+<body className="antialiased">
     <div id="root"></div>
     <script type="module" src="index.js"></script>
 </body>
