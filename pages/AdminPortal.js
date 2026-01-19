@@ -249,4 +249,54 @@ const AdminCustomPosters = () => {
                 >
                   <option value="Submitted">Submitted</option>
                   <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+
+              <div className="p-6 bg-gray-50 rounded-2xl">
+                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-300 mb-2">Overlay Typography</h4>
+                <p className="font-serif text-2xl font-black italic text-gray-900">${p.customText || 'No text provided.'}</p>
+              </div>
+
+              <div className="text-[9px] font-black uppercase tracking-widest text-gray-300">
+                Created on: ${new Date(p.createdAt).toLocaleString()}
+              </div>
+            </div>
+          </div>
+        `)}
+      </div>
+
+      ${posters.length === 0 && html`
+        <div className="p-32 text-center opacity-10">
+          <p className="text-5xl">📫</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] mt-8">No bespoke submissions yet.</p>
+        </div>
+      `}
+    </div>
+  `;
+};
+
+export default function AdminPortal() {
+  const { user } = useApp();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || user.role !== 'admin') navigate('/auth');
+  }, [user]);
+
+  if (!user || user.role !== 'admin') return null;
+
+  return html`
+    <div className="flex bg-white min-h-screen">
+      <${AdminSidebar} />
+      <div className="ml-72 flex-grow">
+        <${Routes}>
+          <${Route} path="/" element=${html`<${AdminDashboard} />`} />
+          <${Route} path="/products" element=${html`<${AdminProducts} />`} />
+          <${Route} path="/orders" element=${html`<${AdminOrders} />`} />
+          <${Route} path="/custom-posters" element=${html`<${AdminCustomPosters} />`} />
+        </${Routes}>
+      </div>
+    </div>
+  `;
+}
