@@ -79,7 +79,7 @@ const AdminProducts = () => {
           <span className="text-brand font-black text-[10px] uppercase tracking-[0.5em]">Inventory System</span>
           <h1 className="font-serif text-5xl font-black italic tracking-tighter text-gray-900">Product Archive</h1>
         </div>
-        <button onClick=${() => setEditing({ name: '', price: 0, category: 'Movie', images: [''], description: '', sizes: [], frameTypes: [], stock: 0 })} className="bg-brand text-white px-10 py-4 rounded-full font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all">+ Add Masterpiece</button>
+        <button onClick=${() => setEditing({ name: '', price: 0, category: 'Movie', images: [''], offerText: '', description: '', sizes: SIZES, frameTypes: FRAME_TYPES, stock: 0 })} className="bg-brand text-white px-10 py-4 rounded-full font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all">+ Add Masterpiece</button>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
@@ -90,6 +90,7 @@ const AdminProducts = () => {
               <div>
                 <h3 className="font-serif text-2xl font-black italic tracking-tight">${p.name}</h3>
                 <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mt-2">${p.category} • ₹${p.price} • ${p.stock} units</p>
+                ${p.offerText && html`<p className="text-[8px] font-black text-brand uppercase tracking-widest mt-1">Active Offer: ${p.offerText}</p>`}
               </div>
             </div>
             <div className="flex gap-4">
@@ -120,6 +121,10 @@ const AdminProducts = () => {
                 <input type="number" value=${editing.price} onChange=${e => setEditing({...editing, price: parseInt(e.target.value)})} className="w-full bg-gray-50 rounded-2xl px-6 py-4 font-bold" />
               </div>
               <div className="md:col-span-2">
+                <label className="text-[9px] font-black uppercase tracking-widest text-gray-400 block mb-3">Promotional Offer (Optional)</label>
+                <input value=${editing.offerText || ''} onChange=${e => setEditing({...editing, offerText: e.target.value})} placeholder="e.g. 20% OFF, LIMITED DEAL" className="w-full bg-gray-50 rounded-2xl px-6 py-4 font-bold border-2 border-brand/10 focus:border-brand" />
+              </div>
+              <div className="md:col-span-2">
                 <label className="text-[9px] font-black uppercase tracking-widest text-gray-400 block mb-3">Product Image Upload</label>
                 <div className="flex items-center gap-6">
                   <div className="w-24 h-32 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100">
@@ -128,8 +133,12 @@ const AdminProducts = () => {
                   <input type="file" accept="image/*" onChange=${handleFileChange} className="text-[9px] font-black uppercase tracking-widest" />
                 </div>
               </div>
+              <div className="md:col-span-2">
+                <label className="text-[9px] font-black uppercase tracking-widest text-gray-400 block mb-3">Manifesto (Description)</label>
+                <textarea required value=${editing.description} onChange=${e => setEditing({...editing, description: e.target.value})} className="w-full bg-gray-50 rounded-2xl px-6 py-4 font-bold h-32" />
+              </div>
               <div className="md:col-span-2 flex gap-4 mt-6">
-                <button type="submit" className="flex-grow bg-brand text-white py-5 rounded-[2rem] font-black uppercase text-[10px] tracking-widest">Commit to Registry</button>
+                <button type="submit" className="flex-grow bg-brand text-white py-5 rounded-[2rem] font-black uppercase text-[10px] tracking-widest shadow-xl">Commit to Registry</button>
                 <button type="button" onClick=${() => setEditing(null)} className="px-10 py-5 border border-gray-100 rounded-[2rem] font-black uppercase text-[10px] tracking-widest">Discard</button>
               </div>
             </form>
@@ -240,54 +249,4 @@ const AdminCustomPosters = () => {
                 >
                   <option value="Submitted">Submitted</option>
                   <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </div>
-
-              <div className="p-6 bg-gray-50 rounded-2xl">
-                <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-300 mb-2">Overlay Typography</h4>
-                <p className="font-serif text-2xl font-black italic text-gray-900">${p.customText || 'No text provided.'}</p>
-              </div>
-
-              <div className="text-[9px] font-black uppercase tracking-widest text-gray-300">
-                Created on: ${new Date(p.createdAt).toLocaleString()}
-              </div>
-            </div>
-          </div>
-        `)}
-      </div>
-
-      ${posters.length === 0 && html`
-        <div className="p-32 text-center opacity-10">
-          <p className="text-5xl">📫</p>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] mt-8">No bespoke submissions yet.</p>
-        </div>
-      `}
-    </div>
-  `;
-};
-
-export default function AdminPortal() {
-  const { user } = useApp();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user || user.role !== 'admin') navigate('/auth');
-  }, [user]);
-
-  if (!user || user.role !== 'admin') return null;
-
-  return html`
-    <div className="flex bg-white min-h-screen">
-      <${AdminSidebar} />
-      <div className="ml-72 flex-grow">
-        <${Routes}>
-          <${Route} path="/" element=${html`<${AdminDashboard} />`} />
-          <${Route} path="/products" element=${html`<${AdminProducts} />`} />
-          <${Route} path="/orders" element=${html`<${AdminOrders} />`} />
-          <${Route} path="/custom-posters" element=${html`<${AdminCustomPosters} />`} />
-        </${Routes}>
-      </div>
-    </div>
-  `;
-}
+                  <option value="Completed">Completed</

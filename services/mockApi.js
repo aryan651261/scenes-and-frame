@@ -3,8 +3,32 @@ const getDB = (key, initial = []) => JSON.parse(localStorage.getItem(key) || JSO
 const setDB = (key, data) => localStorage.setItem(key, JSON.stringify(data));
 
 const INITIAL_PRODUCTS = [
-  { id: '1', name: 'Batman: The Dark Knight', category: 'Superhero', price: 1899, description: 'Iconic cinematic shot of the caped crusader.', images: ['https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80'], sizes: ['12x18', '24x36'], frameTypes: ['Classic Black'], stock: 12, featured: true },
-  { id: '2', name: 'Porsche 911 GT3', category: 'Car', price: 1549, description: 'Engineered for speed, framed for aesthetics.', images: ['https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80'], sizes: ['12x18'], frameTypes: ['Metallic Gold'], stock: 25, featured: true }
+  { 
+    id: '1', 
+    name: 'Batman: The Dark Knight', 
+    category: 'Superhero', 
+    price: 1899, 
+    offerText: '15% OFF - PRE-ORDER',
+    description: 'Iconic cinematic shot of the caped crusader.', 
+    images: ['https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80'], 
+    sizes: ['12x18', '24x36'], 
+    frameTypes: ['Classic Black'], 
+    stock: 12, 
+    featured: true 
+  },
+  { 
+    id: '2', 
+    name: 'Porsche 911 GT3', 
+    category: 'Car', 
+    price: 1549, 
+    offerText: 'FREE GALLERY FRAME',
+    description: 'Engineered for speed, framed for aesthetics.', 
+    images: ['https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80'], 
+    sizes: ['12x18'], 
+    frameTypes: ['Metallic Gold'], 
+    stock: 25, 
+    featured: true 
+  }
 ];
 
 if (!localStorage.getItem('sf_products')) setDB('sf_products', INITIAL_PRODUCTS);
@@ -68,7 +92,6 @@ export const mockApi = {
     }
   },
 
-  // Custom Poster APIs
   submitCustomPoster: async (data) => {
     const posters = getDB('sf_custom_posters');
     const newPoster = { ...data, id: `CUST-${Date.now()}`, status: 'Submitted', createdAt: new Date().toISOString() };
